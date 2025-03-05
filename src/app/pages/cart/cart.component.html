@@ -1,0 +1,63 @@
+<section class="container mx-auto p-6">
+    <h2 class="text-3xl font-semibold mb-6">🛒 Shop Cart :</h2>
+
+    <!-- Spinner while loading -->
+    @if (loading) {
+    <div class="flex justify-center items-center h-64">
+        <i class="fas fa-spinner fa-spin text-4xl text-green-500"></i>
+    </div>
+    }
+
+    <!-- Show empty cart message -->
+    @if (!loading && cart.length === 0) {
+    <div class="text-center text-gray-600 text-lg">
+        🛒 Your cart is empty.
+    </div>
+    }
+
+    <!-- Cart with Total Price -->
+    @if (!loading && cart.length > 0) {
+    <div class="bg-gray-50 shadow-lg rounded-lg p-6">
+        <h3 class="text-xl font-bold text-green-600 mb-4">
+            🛒 Total Cart Price: <span class="text-green-700">{{ totalCartPrice }} EGP</span>
+        </h3>
+
+        @for (item of cart; track item.product._id) {
+        <div class="flex items-center justify-between border-b py-6 bg-white rounded-lg px-4 mb-4 shadow-sm">
+
+            <!-- Product Image -->
+            <img [src]="item.product.imageCover" class="w-24 h-24 object-cover rounded-md shadow-md" alt="Product">
+
+            <!-- Product Info -->
+            <div class="flex-1 mx-4">
+                <h3 class="text-lg font-semibold text-gray-800">{{ item.product.title }}</h3>
+                <p class="text-green-600 font-medium">Price: {{ item.price }} EGP</p>
+                <button (click)="removeFromCart(item.product._id)"
+                    class="text-red-600 font-medium hover:text-red-800 transition flex items-center">
+                    <i class="fas fa-trash-alt mr-1"></i> Remove
+                </button>
+            </div>
+
+            <!-- Quantity Controls -->
+            <div class="flex items-center space-x-2 border px-2 py-1 rounded-lg shadow-sm bg-gray-100">
+                <button (click)="updateQuantity(item, item.count - 1)">-</button>
+                <span class="px-4">{{ item.count }}</span>
+                <button (click)="updateQuantity(item, item.count + 1)">+</button>
+            </div>
+        </div>
+        }
+
+        <!-- Clear Cart Button -->
+        <div class="text-right mt-6">
+            <button (click)="clearCart()"
+                class="bg-red-500 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-red-600 transition">
+                🗑️ Clear Cart
+            </button>
+            <button (click)="paymentroute()" class="bg-green-500 text-white px-6 mx-3 py-3 rounded-lg font-semibold">
+                🛍️ Proceed to Payment
+            </button>
+
+        </div>
+    </div>
+    }
+</section>

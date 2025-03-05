@@ -1,0 +1,72 @@
+@if (loading) {
+<div class="flex justify-center items-center h-64">
+    <i class="fas fa-spinner fa-spin text-4xl text-green-500"></i>
+</div>
+}
+@if (orders.length > 0) {
+<div class="space-y-6">
+    @for (order of orders; track order._id) {
+    <div class="p-6 bg-white shadow-md rounded-lg border border-gray-200">
+        <h3 class="text-xl font-semibold text-gray-700 mb-2">
+            Order #{{ order._id }} ({{ order.paymentMethodType.toUpperCase() }})
+        </h3>
+
+        <!-- Payment & Delivery Status -->
+        <div class="flex items-center space-x-4 mt-4">
+            <span class="px-3 py-1 text-sm rounded-lg text-white" [class.bg-red-500]="!order.isPaid"
+                [class.bg-green-500]="order.isPaid">
+                {{ order.isPaid ? 'Paid ✅' : 'Not Paid ❌' }}
+            </span>
+            <span class="px-3 py-1 text-sm rounded-lg text-white" [class.bg-red-500]="!order.isDelivered"
+                [class.bg-green-500]="order.isDelivered">
+                {{ order.isDelivered ? 'Delivered 📦' : 'Not Delivered 🚫' }}
+            </span>
+        </div>
+
+        <!-- Order Items -->
+        <h4 class="mt-4 text-lg font-medium text-gray-800">🛒 Order Items:</h4>
+        <ul class="mt-2 space-y-2">
+            @if (order.cartItems?.length > 0) {
+            @for (item of order.cartItems; track item._id) {
+            <li class="p-2 border rounded-lg flex items-center space-x-4">
+                <img [src]="item.product?.imageCover || 'fallback-image.jpg'"
+                    alt="{{ item.product?.title || 'No Image' }}" class="w-16 h-16 rounded-md object-cover">
+                <div>
+                    <span class="text-gray-800 font-semibold">{{ item.product?.title }}</span>
+                    <span class="text-gray-600 text-sm">Brand: {{ item.product?.brand?.name }}</span>
+                </div>
+                <span class="text-green-600 font-bold">${{ item.price }} × {{ item.count }}</span>
+            </li>
+            }
+            } @else {
+            <p class="text-gray-500">No items in this order.</p>
+            }
+        </ul>
+
+        <!-- Shipping Info -->
+        @if (order.shippingAddress) {
+        <h4 class="mt-4 text-lg font-medium text-gray-800">🚚 Shipping Details:</h4>
+        <p class="text-gray-600">📍 {{ order.shippingAddress.details }}, {{ order.shippingAddress.city }}</p>
+        <p class="text-gray-600">📞 {{ order.shippingAddress.phone }}</p>
+        }
+
+        <!-- Total Price -->
+        <div class="mt-4 text-right text-xl font-bold text-gray-900">
+            💰 Total: ${{ order.totalOrderPrice }}
+        </div>
+    </div>
+    }
+</div>
+}
+
+<!-- No Orders Found -->
+@if (orders.length === 0 && !loading) {
+<p class="text-center text-gray-500">No orders found. Start shopping now! 🛍️</p>
+}
+
+<!-- Back to Home Button -->
+<div class="text-center mt-8">
+    <button routerLink="/home" class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-700">
+        🏠 Back to Home
+    </button>
+</div>

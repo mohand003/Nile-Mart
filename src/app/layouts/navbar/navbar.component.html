@@ -1,0 +1,100 @@
+<nav class="bg-white shadow-md dark:bg-gray-300  ">
+    <div class=" max-w-7xl flex flex-wrap items-center justify-between mx-auto  py-3">
+
+
+        <a routerLink="/home" class="flex items-center space-x-2">
+            <img src="https://img.icons8.com/color/48/000000/shopping-cart--v1.png" alt="Logo">
+            <span class="self-center items-center text-4xl font-bold whitespace-nowrap hover:text-green-600 dark:text-slate-950">Nile Mart</span>
+        </a>
+
+        <button data-collapse-toggle="navbar-default" type="button"
+            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:focus:ring-gray-600"
+            aria-controls="navbar-default" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M1 1h15M1 7h15M1 13h15" />
+            </svg>
+        </button>
+        <div class="hidden w-full md:flex md:w-auto items-center flex-grow mx-2" id="navbar-default">
+
+            @if (Login()) {
+            <ul class="flex flex-col md:flex-row md:space-x-3 flex-grow">
+                <li>
+                    <a routerLink="/home" routerLinkActive="active"
+                        class="block py-2 px-3 text-gray-800 font-medium rounded-md transition duration-300 hover:text-green-600 dark:text-slate-950">
+                        Home
+                    </a>
+                </li>
+                <!-- <li>
+                    <a routerLink="/cart" routerLinkActive="active"
+                        class="block py-2 px-3 text-gray-800 font-medium rounded-md transition duration-300  dark:text-slate-950">
+                        Cart
+                    </a>
+                </li> -->
+                <li>
+                    <a routerLink="/products" routerLinkActive="active"
+                        class="block py-2 px-3 text-gray-800 font-medium rounded-md transition duration-300 hover:text-green-600 dark:text-slate-950">
+                        Products
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/brands" routerLinkActive="active"
+                        class="block py-2 px-3 text-gray-800 font-medium rounded-md transition duration-300 hover:text-green-600 dark:text-slate-950">
+                        Brands
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/categories" routerLinkActive="active"
+                        class="block py-2 px-3 text-gray-800 font-medium rounded-md transition duration-300 hover:text-green-600 dark:text-slate-950">
+                        Categories
+                    </a>
+                </li>
+            </ul>
+            }
+
+            <ul class="flex ms-auto items-center flex-col md:flex-row md:space-x-1 ">
+                <li class="relative">
+                    <a routerLink="/cart" routerLinkActive="active"
+                        class="block py-2 px-2 text-gray-800 font-medium rounded-md transition duration-300 hover:text-green-600 dark:text-slate-950">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+
+                        @if(cartItemCount>0){
+
+                        <span
+                            class="absolute -top-2 -right-2 bg-red-500 text-slate-950 text-xs font-bold px-2 py-0.5 rounded-full">
+                            {{ cartItemCount }}
+                        </span>
+                        }
+
+                    </a>
+
+                </li>
+                <li>
+                    <!-- Orders Icon (New) -->
+                    <a routerLink="/allorders" routerLinkActive="active"
+                        class="block py-2 px-2 text-gray-800 hover:text-green-600 font-medium rounded-md transition duration-300 dark:text-slate-950"
+                        title="View All Orders">
+                        <i class="fas fa-box text-xl"></i>
+                    </a>
+                </li>
+                @if (!Login()) {
+                <li>
+                    <a routerLink="/login" class="block py-2 px-2 hover:text-green-600 text-gray-800 dark:text-slate-950">Login</a>
+                </li>
+                <li>
+                    <a routerLink="/register" class="block py-2 px-2 hover:text-green-600 text-gray-800 dark:text-slate-950">Register</a>
+                </li>
+                } @else {
+                <li>
+                    <a (click)="logout()"
+                        class="block py-2 px-2 text-gray-800 cursor-pointer hover:text-green-600 dark:text-slate-950">Logout</a>
+                </li>
+                }
+
+
+
+            </ul>
+        </div>
+    </div>
+</nav>

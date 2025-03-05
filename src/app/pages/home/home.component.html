@@ -1,0 +1,133 @@
+<section class="container mx-auto p-6">
+    <div class="grid md:grid-cols-[70%_30%] ">
+
+        <div>
+            <owl-carousel-o [options]="customMainSlider">
+                <ng-template carouselSlide>
+
+                    <img src="/images/img1.jpg" class="w-full h-[300px]" alt="">
+
+                </ng-template>
+                <ng-template carouselSlide>
+
+                    <img src="/images/img2.avif" class="w-full h-[300px]" alt="">
+
+                </ng-template>
+                <ng-template carouselSlide>
+
+                    <img src="/images/img3.avif" class="w-full h-[300px]" alt="">
+
+                </ng-template>
+                <ng-template carouselSlide>
+
+                    <img src="/images/img4.avif" class="w-full h-[300px]" alt="">
+
+                </ng-template>
+                <ng-template carouselSlide>
+
+                    <img src="/images/img5.avif" class="w-full h-[300px]" alt="">
+
+                </ng-template>
+                <ng-template carouselSlide>
+
+                    <img src="/images/img6.avif" class="w-full h-[300px]" alt="">
+
+                </ng-template>
+
+            </owl-carousel-o>
+
+
+
+
+        </div>
+
+
+        <div class="flex flex-col ">
+            <img src="/images/grocery-banner.png" class="w-full h-[150px]" alt="">
+            <img src="/images/grocery-banner-2.jpeg" class="w-full h-[150px]" alt="">
+        </div>
+    </div>
+</section>
+
+
+
+
+<section class="container mx-auto p-6">
+    <h2>Pouplar Categories</h2>
+    <owl-carousel-o [options]="customOptions">
+
+        @for (cat of catogries; track cat._id) {
+
+        <ng-template carouselSlide>
+            <div>
+                <img [src]="cat.image" class="w-full h-48" alt="">
+                <h3 class="text-green-600">{{cat.name}}</h3>
+            </div>
+        </ng-template>
+
+
+        }
+
+
+    </owl-carousel-o>
+
+</section>
+
+@if(loading) {
+    <div class="flex justify-center items-center h-64">
+        <i class="fas fa-spinner fa-spin text-4xl text-green-500"></i>
+    </div>
+}
+@if(!loading) {
+    <section class="container mx-auto p-6">
+
+
+        <h2 class="text-3xl font-semibold mb-4">Popular Products</h2>
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            @for (prod of products; track prod.id) {
+                <div class="border card border-green-400/50 rounded-md overflow-hidden shadow-lg relative bg-white">
+                    <!-- Product Image -->
+                    <div class="card-img">
+                        <img [src]="prod.imageCover" class="w-full h-80 object-contain" [alt]="prod.title">
+                    </div>
+    
+                    <!-- Product Info -->
+                    <div class="card-body p-4">
+                        <h4 class="text-green-500 text-xs uppercase">{{prod.category.name}}</h4>
+                        <h3 class="font-medium text-lg">{{prod.title}}</h3>
+    
+                        <div class="flex justify-between items-center mt-2">
+                            <!-- Price -->
+                            <span class="text-lg font-semibold text-gray-800">{{prod.price}} EGP</span>
+    
+                            <!-- Rating -->
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-300"></i>
+                                <span class="text-gray-500 ml-1">{{prod.ratingsAverage}}</span>
+                            </div>
+                        </div>
+    
+                        <!-- Buttons -->
+                        <div class="flex mt-4 space-x-2">
+                            <button (click)="viewDetails(prod._id)" 
+                                class="w-1/2 bg-gray-500 text-white py-2 rounded-md font-medium hover:bg-gray-600 transition duration-300">
+                                More Details
+                            </button>
+    
+                            <button (click)="addToCart(prod._id)" 
+                                [disabled]="addingToCart === prod._id"
+                                class="w-1/2 bg-green-500 text-white py-2 rounded-md font-medium hover:bg-green-600 transition duration-300 flex justify-center items-center">
+                                
+                                @if (addingToCart === prod._id) {
+                                    <i class="fas fa-spinner fa-spin mr-2"></i>
+                                }
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+}
+

@@ -1,0 +1,20 @@
+<section class="container mx-auto p-6">
+    @if (isLoading) {
+        <div class="flex justify-center items-center h-64">
+            <i class="fas fa-spinner fa-spin text-4xl text-green-500"></i>
+        </div>
+    }
+
+    @if (!isLoading && category) {
+        <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-md p-6">
+            <img [src]="category.image" class="w-full h-48 object-contain rounded-md" alt="Category Image">
+            <h2 class="text-3xl font-semibold text-green-600 mt-4">{{ category.name }}</h2>
+            <p class="text-gray-600 mt-2"><strong>Category Slug:</strong> {{ category.slug }}</p>
+
+            <button (click)="backToCategories()" 
+                class="mt-4 bg-gray-500 text-white py-2 px-4 rounded-md font-medium hover:bg-gray-600 transition duration-300">
+                Back to Categories
+            </button>
+        </div>
+    }
+</section>

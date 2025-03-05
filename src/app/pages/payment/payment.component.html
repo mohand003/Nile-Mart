@@ -1,0 +1,55 @@
+<div class="payment-container m-4 p-6 bg-white rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold mb-4 text-green-600 text-center">Choose Payment Method</h2>
+
+    <!-- Error Alert -->
+    @if (showAlert) {
+    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400">
+        ❌ {{ errorMessage }}
+    </div>
+    }
+
+    <!-- Payment Options -->
+    <div class="flex space-x-4 mb-4">
+        <button (click)="setPaymentMethod('cash')" class="py-2 px-4 rounded-lg bg-gray-200 hover:bg-gray-300"
+            [class.bg-green-400]="paymentMethod === 'cash'">
+            💵 Pay with Cash
+        </button>
+        <button (click)="setPaymentMethod('card')" class="py-2 px-4 rounded-lg bg-gray-200 hover:bg-gray-300"
+            [class.bg-green-400]="paymentMethod === 'card'">
+            💳 Pay with Card
+        </button>
+    </div>
+
+    <!-- Shipping Address Form (Always Visible) -->
+    <div class="mb-6">
+        <h3 class="text-lg font-semibold mb-2">Shipping Address</h3>
+        <form [formGroup]="shippingForm" (ngSubmit)="submitForm()">
+            <input type="text" formControlName="details" placeholder="Street Address"
+                class="w-full p-2 mb-2 border rounded focus:ring-2 focus:ring-green-500">
+            <input type="text" formControlName="phone" placeholder="Phone Number"
+                class="w-full p-2 mb-2 border rounded focus:ring-2 focus:ring-green-500">
+            <input type="text" formControlName="city" placeholder="City"
+                class="w-full p-2 mb-2 border rounded focus:ring-2 focus:ring-green-500">
+
+            <!-- Cash Payment Confirmation -->
+            @if(paymentMethod === 'cash') {
+            <div>
+                <button type="submit" class="bg-green-500 text-white px-6 py-3 rounded-lg w-full">
+                    @if (loading) { <i class="fas fa-spinner fa-spin"></i> }
+                    Confirm Cash Payment
+                </button>
+            </div>
+            }
+
+            <!-- Card Payment Placeholder -->
+            @if (paymentMethod === 'card') {
+            <div>
+                <button type="submit" class="bg-green-500 text-white px-6 py-3 rounded-lg w-full">
+                    @if (loading) { <i class="fas fa-spinner fa-spin"></i> }
+                    Confirm Card Payment
+                </button>
+            </div>
+            }
+        </form>
+    </div>
+</div>
